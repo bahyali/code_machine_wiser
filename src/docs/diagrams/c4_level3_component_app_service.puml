@@ -1,0 +1,46 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Container(api_app, "Application Service", "Python (FastAPI)") {
+    Component(api_handler, "API Handler", "FastAPI Routers", "Receives user queries, sends responses. Validates input.")
+    Component(orchestrator, "Query Orchestrator", "Python Module", "Manages the overall flow of query processing, including intent-specific routing and iterative logic.")
+    Component(intent_analyzer, "Intent Analysis Module", "Python Module", "Uses LLM Interaction Service to determine user intent (chit-chat, data retrieval, insights).")
+    Component(chitchat_handler, "Chit-Chat Handler", "Python Module", "Uses LLM Interaction Service to generate conversational responses.")
+    Component(schema_manager, "DB Schema Manager", "Python Module", "Fetches, caches, and provides database schema information to other components.")
+    Component(sql_generator, "SQL Generation Module", "Python Module", "Uses LLM Interaction Service and schema info to generate SQL queries.")
+    Component(sql_executor, "SQL Execution Module", "Python Module", "Connects to PostgreSQL DB, executes SQL queries, fetches results.")
+    Component(error_corrector, "SQL Error & Correction Module", "Python Module", "Analyzes SQL errors, uses LLM Interaction Service to suggest corrections, manages retry attempts.")
+    Component(response_synthesizer, "Response Synthesis Module", "Python Module", "Compiles data, uses LLM Interaction Service to generate natural language responses.")
+    Component(formatter_validator, "Data Formatter & Validator", "Python Module", "Formats data (counts, SAR currency) and validates presentation layer requirements.")
+    Component(llm_interaction_svc, "LLM Interaction Service", "Python Wrapper for OpenAI API", "Manages communication with GPT-4o, including prompt construction and API calls.")
+}
+
+System_Ext(pg_db, "PostgreSQL Database", "User's Database")
+System_Ext(llm_service, "LLM Service (GPT-4o)", "OpenAI API")
+
+Rel(api_handler, orchestrator, "Passes user query to", "Python call")
+Rel(orchestrator, intent_analyzer, "Uses for intent classification")
+Rel(orchestrator, chitchat_handler, "Delegates to, if chit-chat intent")
+Rel(orchestrator, schema_manager, "Uses to get schema for SQL generation")
+Rel(orchestrator, sql_generator, "Uses for SQL query generation")
+Rel(orchestrator, sql_executor, "Uses to execute SQL")
+Rel(orchestrator, error_corrector, "Uses for SQL error handling and correction")
+Rel(orchestrator, response_synthesizer, "Uses to generate final response")
+Rel(orchestrator, formatter_validator, "Uses to format and validate data in response")
+Rel_Back(orchestrator, api_handler, "Returns final response to")
+
+Rel(intent_analyzer, llm_interaction_svc, "Uses")
+Rel(chitchat_handler, llm_interaction_svc, "Uses")
+Rel(sql_generator, llm_interaction_svc, "Uses")
+Rel(sql_generator, schema_manager, "Consumes schema from")
+Rel(error_corrector, llm_interaction_svc, "Uses for correction suggestions")
+Rel(error_corrector, sql_generator, "May request new SQL from")
+Rel(response_synthesizer, llm_interaction_svc, "Uses")
+
+Rel(llm_interaction_svc, llm_service, "Calls", "HTTPS/API")
+Rel(sql_executor, pg_db, "Connects & sends SQL to", "SQL/JDBC")
+Rel(schema_manager, pg_db, "Fetches schema from", "SQL/JDBC (Information Schema)")
+
+@enduml
