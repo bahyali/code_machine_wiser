@@ -1,0 +1,80 @@
+@startuml
+actor User
+participant "API Handler" as APIH
+participant "Query Orchestrator" as Orch
+participant "Intent Analysis Mod." as IntentM
+participant "DB Schema Manager" as SchemaM
+participant "SQL Generation Mod." as SQLGenM
+participant "SQL Execution Mod." as SQLExecM
+participant "SQL Error & Corr. Mod." as SQLErrM
+participant "Response Synth. Mod." as RespSynthM
+participant "LLM Interaction Svc" as LLMSvc
+database "PostgreSQL DB" as PGDB
+participant "LLM Service (GPT-4o)" as ExtLLM
+
+User -> APIH : POST /query (natural_language_query)
+APIH -> Orch : processQuery(query)
+
+Orch -> IntentM : analyzeIntent(query)
+IntentM -> LLMSvc : getCompletion(prompt_intent_analysis, query)
+LLMSvc -> ExtLLM : Call GPT-4o API
+ExtLLM --> LLMSvc : Intent="ASKING_FOR_INSIGHTS"
+LLMSvc --> IntentM : Intent
+IntentM --> Orch : Intent
+
+Orch -> SchemaM : getSchema()
+SchemaM -> PGDB : Fetch DB Schema
+PGDB --> SchemaM : Schema Information
+SchemaM --> Orch : Schema
+
+loop Iterative Querying (Max N times or until insight complete)
+    Orch -> SQLGenM : generateSQLForInsight(query, schema, previous_results)
+    SQLGenM -> LLMSvc : getCompletion(prompt_sql_gen_insight, query, schema, context)
+    LLMSvc -> ExtLLM : Call GPT-4o API
+    ExtLLM --> LLMSvc : Generated SQL
+    LLMSvc --> SQLGenM : SQL_Query
+    SQLGenM --> Orch : SQL_Query
+
+    Orch -> SQLExecM : executeSQL(SQL_Query)
+    SQLExecM -> PGDB : Execute SQL
+    alt SQL Execution Successful
+        PGDB --> SQLExecM : Query_Results
+        SQLExecM --> Orch : Query_Results
+        Orch -> RespSynthM : checkInsightCompleteness(query, Query_Results) 'Uses LLM via LLMSvc
+        RespSynthM -> LLMSvc : getCompletion(prompt_insight_check, ...)
+        LLMSvc -> ExtLLM : Call GPT-4o API
+        ExtLLM --> LLMSvc : {complete: true/false, next_steps: ...}
+        LLMSvc --> RespSynthM : Assessment
+        RespSynthM --> Orch : Assessment
+        opt if not complete and more queries needed
+            Orch: continue loop with new context
+        else
+            Orch: break loop
+        end
+    else SQL Execution Error
+        PGDB --> SQLExecM : SQL_Error_Message
+        SQLExecM --> Orch : SQL_Error_Message
+        Orch -> SQLErrM : handleAndCorrectError(SQL_Query, SQL_Error_Message)
+        SQLErrM -> LLMSvc : getCompletion(prompt_sql_correction, SQL_Query, error)
+        LLMSvc -> ExtLLM : Call GPT-4o API
+        ExtLLM --> LLMSvc : Corrected_SQL_Suggestion / Analysis
+        LLMSvc --> SQLErrM : Suggestion
+        alt Correction Successful (within N attempts)
+            SQLErrM --> Orch : Corrected_SQL_Query (to be re-executed in next iteration)
+        else Correction Fails or Max Attempts Reached
+            Orch: Log error, decide to proceed with partial data or report failure
+            Orch: break loop (or adjust strategy)
+        end
+    end
+end
+
+Orch -> RespSynthM : synthesizeResponse(query, all_collected_results)
+RespSynthM -> LLMSvc : getCompletion(prompt_response_synthesis, query, data)
+LLMSvc -> ExtLLM : Call GPT-4o API
+ExtLLM --> LLMSvc : Natural_Language_Response
+LLMSvc --> RespSynthM : Response
+' Data formatting and validation (FR-PRES-001, FR-VALID-001) happens here or within RespSynthM'
+RespSynthM --> Orch : Formatted_Response
+Orch --> APIH : Formatted_Response
+APIH --> User : HTTP 200 OK (Formatted_Response)
+@enduml
