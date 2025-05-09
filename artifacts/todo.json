@@ -1,0 +1,491 @@
+[
+    {
+        "name": "I1.T1",
+        "context": "{'task_id': 'I1.T1', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestration & LLM Interaction Shell', 'description': 'Create the project directory structure as defined in Section 3. Initialize `git`. Set up virtual environment and install initial dependencies (`fastapi`, `uvicorn`, `pydantic`, `python-dotenv`, `PyYAML`). Create basic `README.md`, `.gitignore`, `Dockerfile` (basic FastAPI), and `requirements.txt`.', 'agent_type_hint': 'SetupAgent', 'inputs': 'Section 3 (Directory Structure).', 'target_files': ['llm_sql_query_system/', 'llm_sql_query_system/README.md', 'llm_sql_query_system/.gitignore', 'llm_sql_query_system/Dockerfile', 'llm_sql_query_query_system/requirements.txt'], 'input_files': [], 'deliverables': 'Project directory structure, basic project files, initial `requirements.txt`.', 'acceptance_criteria': 'Directory structure matches Section 3. `fastapi` app can run a basic \"hello world\" endpoint. `Dockerfile` can build a runnable image.', 'dependencies': [], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "llm_sql_query_system/",
+            "llm_sql_query_system/README.md",
+            "llm_sql_query_system/.gitignore",
+            "llm_sql_query_system/Dockerfile",
+            "llm_sql_query_query_system/requirements.txt"
+        ],
+        "input_files": [],
+        "dependencies": []
+    },
+    {
+        "name": "I1.T2",
+        "context": "{'task_id': 'I1.T2', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Generate the C4 Level 1 System Context Diagram and C4 Level 2 Container Diagram based on the \"System Architecture Blueprint\" (Sections 3.3, 3.4). Save as PlantUML source files.', 'agent_type_hint': 'DiagrammingAgent', 'inputs': '\"System Architecture Blueprint\" document (Sections 3.3, 3.4).', 'target_files': ['docs/diagrams/c4_level1_context.puml', 'docs/diagrams/c4_level2_container.puml'], 'input_files': [], 'deliverables': 'PlantUML files for C4 L1 and L2 diagrams.', 'acceptance_criteria': 'PlantUML files are syntactically correct and render diagrams accurately reflecting the architecture document.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "docs/diagrams/c4_level1_context.puml",
+            "docs/diagrams/c4_level2_container.puml"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I1.T3",
+        "context": "{'task_id': 'I1.T3', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Generate the C4 Level 3 Component Diagram for the \"Application Service\" based on the \"System Architecture Blueprint\" (Section 3.5). Save as a PlantUML source file.', 'agent_type_hint': 'DiagrammingAgent', 'inputs': '\"System Architecture Blueprint\" document (Section 3.5).', 'target_files': ['docs/diagrams/c4_level3_component_app_service.puml'], 'input_files': [], 'deliverables': 'PlantUML file for C4 L3 Application Service Component diagram.', 'acceptance_criteria': 'PlantUML file is syntactically correct and renders a diagram accurately reflecting the components described in the architecture document.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "docs/diagrams/c4_level3_component_app_service.puml"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I1.T4",
+        "context": "{'task_id': 'I1.T4', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Create an initial OpenAPI v3 specification (YAML) for the primary query endpoint (e.g., `POST /api/v1/query`). Define basic request (natural language query) and response (text response) schemas using Pydantic models.', 'agent_type_hint': 'APIDefinitionAgent', 'inputs': 'Section 2 (API Contract Style), FR-INPUT-001.', 'target_files': ['api_docs/openapi.yaml', 'src/models/query_models.py'], 'input_files': [], 'deliverables': '`openapi.yaml` file, Pydantic models for request/response.', 'acceptance_criteria': '`openapi.yaml` is valid OpenAPI v3. Pydantic models are defined. FastAPI can generate docs from this.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "api_docs/openapi.yaml",
+            "src/models/query_models.py"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I1.T5",
+        "context": "{'task_id': 'I1.T5', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Implement configuration loading (e.g., for LLM API key, model name) from environment variables and optionally a YAML file (`config.yaml`). Create `src/core/config.py`, `.env.example`, and `config.example.yaml`. Define a schema/structure for `config.yaml` in Markdown.', 'agent_type_hint': 'BackendAgent', 'inputs': 'NFR-MAINT-001, Section 2 (Technology Stack - `python-dotenv`, `PyYAML`).', 'target_files': ['src/core/config.py', '.env.example', 'config.example.yaml', 'docs/config_schema.md'], 'input_files': [], 'deliverables': 'Configuration loading module, example config files, config schema documentation.', 'acceptance_criteria': 'Application can load configuration from .env and/or config.yaml. Sensitive keys (like API key) are loaded from .env.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "src/core/config.py",
+            ".env.example",
+            "config.example.yaml",
+            "docs/config_schema.md"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I1.T6",
+        "context": "{'task_id': 'I1.T6', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Implement the FastAPI entry point (`src/main.py`) and the API handler (`src/api/v1/query_router.py`) for the `/api/v1/query` endpoint based on `I1.T4`. Create a shell for the `QueryOrchestrator` (`src/core/orchestrator.py`) that the API handler calls. The orchestrator initially returns a hardcoded response.', 'agent_type_hint': 'BackendAgent', 'inputs': '`I1.T4` (OpenAPI spec and Pydantic models), Section 2 (Key Components).', 'target_files': ['src/main.py', 'src/api/v1/query_router.py', 'src/core/orchestrator.py'], 'input_files': ['api_docs/openapi.yaml', 'src/models/query_models.py'], 'deliverables': 'Functional API endpoint returning a hardcoded response. Shell for Query Orchestrator.', 'acceptance_criteria': '`POST /api/v1/query` endpoint accepts a query string and returns a predefined JSON response. Orchestrator shell is callable.', 'dependencies': ['I1.T1', 'I1.T4', 'I1.T5'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "src/main.py",
+            "src/api/v1/query_router.py",
+            "src/core/orchestrator.py"
+        ],
+        "input_files": [
+            "api_docs/openapi.yaml",
+            "src/models/query_models.py"
+        ],
+        "dependencies": [
+            "I1.T1",
+            "I1.T4",
+            "I1.T5"
+        ]
+    },
+    {
+        "name": "I1.T7",
+        "context": "{'task_id': 'I1.T7', 'iteration_id': 'I1', 'iteration_goal': 'Project Setup, Core API, Basic Orchestrator & LLM Interaction Shell', 'description': 'Create a shell for the `LLMInteractionService` (`src/core/llm_interaction_service.py`). It should initialize with configuration (API key, model) from `I1.T5` and have a placeholder method for making LLM calls (e.g., `get_completion(prompt)`). This method can initially return a hardcoded string or log the prompt.', 'agent_type_hint': 'BackendAgent', 'inputs': '`I1.T5` (Config module), Section 2 (Key Components).', 'target_files': ['src/core/llm_interaction_service.py'], 'input_files': ['src/core/config.py'], 'deliverables': 'Shell `LLMInteractionService` class.', 'acceptance_criteria': 'Service can be instantiated. `get_completion` method exists and can be called.', 'dependencies': ['I1.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I1",
+        "completed": false,
+        "target_files": [
+            "src/core/llm_interaction_service.py"
+        ],
+        "input_files": [
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I1.T5"
+        ]
+    },
+    {
+        "name": "I2.T1",
+        "context": "{'task_id': 'I2.T1', 'iteration_id': 'I2', 'iteration_goal': 'Intent Analysis, Chit-Chat Handling, DB Schema Management', 'description': \"Enhance `LLMInteractionService` to make actual API calls to GPT-4o using the `openai` library. Implement error handling for API calls (retries, exceptions). The `get_completion` method should take a prompt and return the LLM's response.\", 'agent_type_hint': 'BackendAgent', 'inputs': '`I1.T7` (LLM Service Shell), `I1.T5` (Config), OpenAI API documentation.', 'target_files': ['src/core/llm_interaction_service.py'], 'input_files': ['src/core/llm_interaction_service.py', 'src/core/config.py'], 'deliverables': 'Functional `LLMInteractionService` capable of communicating with GPT-4o.', 'acceptance_criteria': 'Service can successfully send a prompt to GPT-4o and receive a response. API errors are handled gracefully.', 'dependencies': ['I1.T7', 'I1.T5'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I2",
+        "completed": false,
+        "target_files": [
+            "src/core/llm_interaction_service.py"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I1.T7",
+            "I1.T5"
+        ]
+    },
+    {
+        "name": "I2.T2",
+        "context": "{'task_id': 'I2.T2', 'iteration_id': 'I2', 'iteration_goal': 'Intent Analysis, Chit-Chat Handling, DB Schema Management', 'description': 'Create `IntentAnalysisModule` (`src/services/intent_analyzer.py`). This module will use `LLMInteractionService` to classify user query intent (chit-chat, data retrieval, insights) as per FR-INTENT-001. Develop initial prompt templates for intent analysis and store them in `src/prompts/intent_analysis.txt`.', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-INTENT-001, `I2.T1` (LLM Interaction Service).', 'target_files': ['src/services/intent_analyzer.py', 'src/prompts/intent_analysis.txt'], 'input_files': ['src/core/llm_interaction_service.py', 'src/core/config.py'], 'deliverables': '`IntentAnalysisModule` and prompt template(s).', 'acceptance_criteria': 'Module can take a user query and return a classified intent (e.g., \"CHITCHAT\", \"DATA_RETRIEVAL\", \"INSIGHTS\"). NFR-ACC-001 target: 95% accuracy on a predefined test set of queries.', 'dependencies': ['I2.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I2",
+        "completed": false,
+        "target_files": [
+            "src/services/intent_analyzer.py",
+            "src/prompts/intent_analysis.txt"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I2.T1"
+        ]
+    },
+    {
+        "name": "I2.T3",
+        "context": "{'task_id': 'I2.T3', 'iteration_id': 'I2', 'iteration_goal': 'Intent Analysis, Chit-Chat Handling, DB Schema Management', 'description': 'Create `ChitChatHandlerModule` (`src/services/chitchat_handler.py`). This module will use `LLMInteractionService` to generate conversational responses for \"chit-chat\" intents (FR-INTENT-001.1). Develop initial prompt templates for chit-chat responses.', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-INTENT-001.1, `I2.T1` (LLM Interaction Service).', 'target_files': ['src/services/chitchat_handler.py', 'src/prompts/chitchat_response.txt'], 'input_files': ['src/core/llm_interaction_service.py', 'src/core/config.py'], 'deliverables': '`ChitChatHandlerModule` and prompt template(s).', 'acceptance_criteria': 'Module can take a user query (classified as chit-chat) and generate a relevant conversational response. NFR-PERF-001 target: response within 10s.', 'dependencies': ['I2.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I2",
+        "completed": false,
+        "target_files": [
+            "src/services/chitchat_handler.py",
+            "src/prompts/chitchat_response.txt"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I2.T1"
+        ]
+    },
+    {
+        "name": "I2.T4",
+        "context": "{'task_id': 'I2.T4', 'iteration_id': 'I2', 'iteration_goal': 'Intent Analysis, Chit-Chat Handling, DB Schema Management', 'description': \"Create `DBSchemaManager` (`src/services/schema_manager.py`). This module will connect to the user's PostgreSQL database (connection details from config) and fetch schema information (tables, columns, types, relationships) as per FR-DB-001. Implement methods to get schema as a structured string/JSON suitable for LLM prompts. Add `psycopg2-binary` to `requirements.txt`.\", 'agent_type_hint': 'DatabaseAgent / BackendAgent', 'inputs': 'FR-DB-001, `I1.T5` (Config). PostgreSQL documentation on information_schema.', 'target_files': ['src/services/schema_manager.py', 'requirements.txt'], 'input_files': ['src/core/config.py'], 'deliverables': '`DBSchemaManager` capable of fetching and representing PostgreSQL schema.', 'acceptance_criteria': 'Module can connect to a sample PostgreSQL DB and retrieve its schema. Schema representation is clear and comprehensive for LLM consumption.', 'dependencies': ['I1.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I2",
+        "completed": false,
+        "target_files": [
+            "src/services/schema_manager.py",
+            "requirements.txt"
+        ],
+        "input_files": [
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I1.T5"
+        ]
+    },
+    {
+        "name": "I2.T5",
+        "context": "{'task_id': 'I2.T5', 'iteration_id': 'I2', 'iteration_goal': 'Intent Analysis, Chit-Chat Handling, DB Schema Management', 'description': 'Update `QueryOrchestrator` (`src/core/orchestrator.py`) to use `IntentAnalysisModule`. If intent is \"chit-chat\", use `ChitChatHandlerModule` to generate and return the response. For other intents, return a placeholder message for now.', 'agent_type_hint': 'BackendAgent', 'inputs': '`I1.T6` (Orchestrator Shell), `I2.T2` (Intent Module), `I2.T3` (Chit-Chat Module).', 'target_files': ['src/core/orchestrator.py'], 'input_files': ['src/core/orchestrator.py', 'src/services/intent_analyzer.py', 'src/services/chitchat_handler.py'], 'deliverables': 'Orchestrator that handles chit-chat intent end-to-end.', 'acceptance_criteria': 'API can now receive a query, classify it, and if chit-chat, respond using LLM. Other intents are acknowledged.', 'dependencies': ['I1.T6', 'I2.T2', 'I2.T3'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I2",
+        "completed": false,
+        "target_files": [
+            "src/core/orchestrator.py"
+        ],
+        "input_files": [
+            "src/core/orchestrator.py",
+            "src/services/intent_analyzer.py",
+            "src/services/chitchat_handler.py"
+        ],
+        "dependencies": [
+            "I1.T6",
+            "I2.T2",
+            "I2.T3"
+        ]
+    },
+    {
+        "name": "I3.T1",
+        "context": "{'task_id': 'I3.T1', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': 'Create a PlantUML sequence diagram illustrating the typical flow for a \"data retrieval\" intent, from API request through intent analysis, SQL generation, SQL execution, data compilation, response synthesis, and API response.', 'agent_type_hint': 'DiagrammingAgent', 'inputs': 'FR-INTENT-001.2, FR-SQL-001, FR-SQL-003, FR-RESP-001, FR-RESP-002, System Architecture.', 'target_files': ['docs/diagrams/sequence_data_retrieval.puml'], 'input_files': [], 'deliverables': 'PlantUML file for the data retrieval sequence diagram.', 'acceptance_criteria': 'PlantUML file is syntactically correct and accurately depicts the data retrieval flow involving relevant components.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "docs/diagrams/sequence_data_retrieval.puml"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I3.T2",
+        "context": "{'task_id': 'I3.T2', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': \"Create `SQLGenerationModule` (`src/services/sql_generator.py`). This module will use `LLMInteractionService` and schema information from `DBSchemaManager` to translate a user's natural language query (intent: data retrieval) into a SQL query (FR-SQL-001). Develop initial prompt templates for SQL generation.\", 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-SQL-001, `I2.T1` (LLM Service), `I2.T4` (Schema Manager).', 'target_files': ['src/services/sql_generator.py', 'src/prompts/sql_generation_retrieval.txt'], 'input_files': ['src/core/llm_interaction_service.py', 'src/services/schema_manager.py', 'src/core/config.py'], 'deliverables': '`SQLGenerationModule` and SQL generation prompt template(s).', 'acceptance_criteria': 'Module can take a user query and schema info, and generate a syntactically plausible SQL query. NFR-ACC-002 target: 95% correctness for translatable queries.', 'dependencies': ['I2.T1', 'I2.T4'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "src/services/sql_generator.py",
+            "src/prompts/sql_generation_retrieval.txt"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/services/schema_manager.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I2.T1",
+            "I2.T4"
+        ]
+    },
+    {
+        "name": "I3.T3",
+        "context": "{'task_id': 'I3.T3', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': \"Create `SQLExecutionModule` (`src/services/sql_executor.py`). This module will take a generated SQL query, connect to the user's PostgreSQL DB (using `DBSchemaManager`'s connection or similar config), execute the query (FR-SQL-003), and return the results. Handle basic execution errors (e.g., connection issues, syntax errors reported by DB).\", 'agent_type_hint': 'DatabaseAgent / BackendAgent', 'inputs': 'FR-SQL-003, `I2.T4` (for DB connection config).', 'target_files': ['src/services/sql_executor.py'], 'input_files': ['src/core/config.py'], 'deliverables': '`SQLExecutionModule` capable of executing SQL and returning results or errors.', 'acceptance_criteria': 'Module can execute valid SQL SELECT queries against a sample PostgreSQL DB and return fetched data. Basic DB errors are caught and reported.', 'dependencies': ['I1.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "src/services/sql_executor.py"
+        ],
+        "input_files": [
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I1.T5"
+        ]
+    },
+    {
+        "name": "I3.T4",
+        "context": "{'task_id': 'I3.T4', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': 'Create `ResponseSynthesisModule` (`src/services/response_synthesizer.py`). For data retrieval, this module will take the original user query and the data fetched by `SQLExecutionModule`, then use `LLMInteractionService` to generate a natural language response summarizing or presenting the data (FR-RESP-001, FR-RESP-002).', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-RESP-001, FR-RESP-002, `I2.T1` (LLM Service).', 'target_files': ['src/services/response_synthesizer.py', 'src/prompts/response_synthesis_retrieval.txt'], 'input_files': ['src/core/llm_interaction_service.py', 'src/core/config.py'], 'deliverables': '`ResponseSynthesisModule` and response synthesis prompt template(s).', 'acceptance_criteria': 'Module can take query results and generate a coherent natural language response.', 'dependencies': ['I2.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "src/services/response_synthesizer.py",
+            "src/prompts/response_synthesis_retrieval.txt"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I2.T1"
+        ]
+    },
+    {
+        "name": "I3.T5",
+        "context": "{'task_id': 'I3.T5', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': 'Create `DataFormatterValidatorModule` (`src/services/formatter_validator.py`). This module will implement logic to format data as per FR-PRES-001 and FR-VALID-001 (whole numbers for counts, SAR currency format for revenues). This module will be used by `ResponseSynthesisModule` or the Orchestrator before sending the final response.', 'agent_type_hint': 'BackendAgent', 'inputs': 'FR-PRES-001, FR-VALID-001.', 'target_files': ['src/services/formatter_validator.py'], 'input_files': [], 'deliverables': '`DataFormatterValidatorModule`.', 'acceptance_criteria': 'Module correctly formats numbers as whole counts and monetary values in SAR format (e.g., \"1,234.50 SAR\"). Validation ensures correct application.', 'dependencies': [], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "src/services/formatter_validator.py"
+        ],
+        "input_files": [],
+        "dependencies": []
+    },
+    {
+        "name": "I3.T6",
+        "context": "{'task_id': 'I3.T6', 'iteration_id': 'I3', 'iteration_goal': 'Data Retrieval, Basic Response Synthesis & Formatting', 'description': 'Update `QueryOrchestrator` to handle \"data retrieval\" intent. It will:\\n1. Get schema from `DBSchemaManager`.\\n2. Generate SQL using `SQLGenerationModule`.\\n3. Execute SQL using `SQLExecutionModule`.\\n4. (If successful) Synthesize response using `ResponseSynthesisModule`.\\n5. (If successful) Format data using `DataFormatterValidatorModule`.\\n6. Return the final response. Basic error handling (e.g., if SQL execution fails, return an error message).', 'agent_type_hint': 'BackendAgent', 'inputs': '`I2.T5` (Orchestrator), `I3.T2`, `I3.T3`, `I3.T4`, `I3.T5`, `I2.T4`.', 'target_files': ['src/core/orchestrator.py'], 'input_files': ['src/core/orchestrator.py', 'src/services/sql_generator.py', 'src/services/sql_executor.py', 'src/services/response_synthesizer.py', 'src/services/formatter_validator.py', 'src/services/schema_manager.py'], 'deliverables': 'Orchestrator capable of handling data retrieval intent end-to-end.', 'acceptance_criteria': 'API can now process data retrieval queries: generate SQL, execute, get data, formulate, format, and return a response. NFR-PERF-002 target: response within 30s for simple queries.', 'dependencies': ['I2.T5', 'I3.T2', 'I3.T3', 'I3.T4', 'I3.T5', 'I2.T4'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I3",
+        "completed": false,
+        "target_files": [
+            "src/core/orchestrator.py"
+        ],
+        "input_files": [
+            "src/core/orchestrator.py",
+            "src/services/sql_generator.py",
+            "src/services/sql_executor.py",
+            "src/services/response_synthesizer.py",
+            "src/services/formatter_validator.py",
+            "src/services/schema_manager.py"
+        ],
+        "dependencies": [
+            "I2.T5",
+            "I3.T2",
+            "I3.T3",
+            "I3.T4",
+            "I3.T5",
+            "I2.T4"
+        ]
+    },
+    {
+        "name": "I4.T1",
+        "context": "{'task_id': 'I4.T1', 'iteration_id': 'I4', 'iteration_goal': 'Insight Generation & SQL Error Handling', 'description': 'Create/Refine the PlantUML sequence diagram for \"Insight Generation Intent Handling\" based on \"System Architecture Blueprint\" (Section 3.7), detailing iterative querying, schema access, SQL generation/execution, error correction, and response synthesis.', 'agent_type_hint': 'DiagrammingAgent', 'inputs': '\"System Architecture Blueprint\" (Section 3.7), FR-INTENT-001.3, FR-SQL-002, FR-SQL-004, FR-ERROR-001.', 'target_files': ['docs/diagrams/sequence_insight_generation.puml'], 'input_files': [], 'deliverables': 'PlantUML file for the insight generation sequence diagram.', 'acceptance_criteria': 'PlantUML file is syntactically correct and accurately depicts the complex insight generation flow.', 'dependencies': ['I1.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I4",
+        "completed": false,
+        "target_files": [
+            "docs/diagrams/sequence_insight_generation.puml"
+        ],
+        "input_files": [],
+        "dependencies": [
+            "I1.T1"
+        ]
+    },
+    {
+        "name": "I4.T2",
+        "context": "{'task_id': 'I4.T2', 'iteration_id': 'I4', 'iteration_goal': 'Insight Generation & SQL Error Handling', 'description': 'Extend `SQLGenerationModule` to support \"insight generation\" (FR-SQL-002). This may involve different prompting strategies, potentially generating multiple queries or more complex queries based on schema and insight type. Add prompt templates for insight SQL generation.', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-SQL-002, `I3.T2` (SQL Gen Module).', 'target_files': ['src/services/sql_generator.py', 'src/prompts/sql_generation_insight.txt'], 'input_files': ['src/services/sql_generator.py', 'src/core/llm_interaction_service.py', 'src/services/schema_manager.py'], 'deliverables': 'Enhanced `SQLGenerationModule`.', 'acceptance_criteria': 'Module can generate SQL queries suitable for gathering data for insights, potentially based on different prompts than simple retrieval.', 'dependencies': ['I3.T2'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I4",
+        "completed": false,
+        "target_files": [
+            "src/services/sql_generator.py",
+            "src/prompts/sql_generation_insight.txt"
+        ],
+        "input_files": [
+            "src/services/sql_generator.py",
+            "src/core/llm_interaction_service.py",
+            "src/services/schema_manager.py"
+        ],
+        "dependencies": [
+            "I3.T2"
+        ]
+    },
+    {
+        "name": "I4.T3",
+        "context": "{'task_id': 'I4.T3', 'iteration_id': 'I4', 'iteration_goal': 'Insight Generation & SQL Error Handling', 'description': 'Create `SQLErrorCorrectionModule` (`src/services/error_corrector.py`). This module will take a failed SQL query and its error message, use `LLMInteractionService` to analyze and attempt correction (FR-ERROR-001). It should manage retry attempts for corrected queries.', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': 'FR-ERROR-001, `I2.T1` (LLM Service).', 'target_files': ['src/services/error_corrector.py', 'src/prompts/sql_error_correction.txt'], 'input_files': ['src/core/llm_interaction_service.py', 'src/core/config.py'], 'deliverables': '`SQLErrorCorrectionModule` and error correction prompt template(s).', 'acceptance_criteria': 'Module can analyze a SQL error, suggest a correction using LLM, and manage retries. NFR-REL-001 target: 90% success for common errors.', 'dependencies': ['I2.T1'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I4",
+        "completed": false,
+        "target_files": [
+            "src/services/error_corrector.py",
+            "src/prompts/sql_error_correction.txt"
+        ],
+        "input_files": [
+            "src/core/llm_interaction_service.py",
+            "src/core/config.py"
+        ],
+        "dependencies": [
+            "I2.T1"
+        ]
+    },
+    {
+        "name": "I4.T4",
+        "context": "{'task_id': 'I4.T4', 'iteration_id': 'I4', 'iteration_goal': 'Insight Generation & SQL Error Handling', 'description': 'Extend `ResponseSynthesisModule` to handle data compiled from (potentially multiple) queries for insights. This may involve more complex summarization or explanation by the LLM. Add prompt templates for insight response synthesis.', 'agent_type_hint': 'BackendAgent / LLMAgent', 'inputs': '`I3.T4` (Response Synth Module).', 'target_files': ['src/services/response_synthesizer.py', 'src/prompts/response_synthesis_insight.txt'], 'input_files': ['src/services/response_synthesizer.py', 'src/core/llm_interaction_service.py'], 'deliverables': 'Enhanced `ResponseSynthesisModule`.', 'acceptance_criteria': 'Module can synthesize a comprehensive insight from potentially multiple datasets. NFR-ACC-003 target: 75% relevance.', 'dependencies': ['I3.T4'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I4",
+        "completed": false,
+        "target_files": [
+            "src/services/response_synthesizer.py",
+            "src/prompts/response_synthesis_insight.txt"
+        ],
+        "input_files": [
+            "src/services/response_synthesizer.py",
+            "src/core/llm_interaction_service.py"
+        ],
+        "dependencies": [
+            "I3.T4"
+        ]
+    },
+    {
+        "name": "I4.T5",
+        "context": "{'task_id': 'I4.T5', 'iteration_id': 'I4', 'iteration_goal': 'Insight Generation & SQL Error Handling', 'description': 'Update `QueryOrchestrator` to handle \"asking for insights\" intent. This involves:\\n1. Using `SQLGenerationModule` (for insights).\\n2. Looping for iterative querying if needed (FR-SQL-004), potentially using LLM to decide if more data is needed.\\n3. Using `SQLExecutionModule` and integrating `SQLErrorCorrectionModule` if execution fails.\\n4. Compiling all data and using `ResponseSynthesisModule` (for insights).\\n5. Using `DataFormatterValidatorModule`.', 'agent_type_hint': 'BackendAgent', 'inputs': '`I3.6` (Orchestrator), `I4.T2`, `I4.T3`, `I4.T4`.', 'target_files': ['src/core/orchestrator.py'], 'input_files': ['src/core/orchestrator.py', 'src/services/sql_generator.py', 'src/services/error_corrector.py', 'src/services/response_synthesizer.py'], 'deliverables': 'Orchestrator capable of handling insight generation, including iterative querying and error correction.', 'acceptance_criteria': 'API can process insight queries, potentially making multiple DB calls, correcting SQL errors, and generating a synthesized insight. NFR-PERF-003 target: 90s for typical insights.', 'dependencies': ['I3.T6', 'I4.T2', 'I4.T3', 'I4.T4'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I4",
+        "completed": false,
+        "target_files": [
+            "src/core/orchestrator.py"
+        ],
+        "input_files": [
+            "src/core/orchestrator.py",
+            "src/services/sql_generator.py",
+            "src/services/error_corrector.py",
+            "src/services/response_synthesizer.py"
+        ],
+        "dependencies": [
+            "I3.T6",
+            "I4.T2",
+            "I4.T3",
+            "I4.T4"
+        ]
+    },
+    {
+        "name": "I5.T1",
+        "context": "{'task_id': 'I5.T1', 'iteration_id': 'I5', 'iteration_goal': 'Testing, Logging, Monitoring & Finalization', 'description': 'Write unit tests for all core modules and services (Intent Analysis, SQL Generation, Execution, Error Correction, Response Synthesis, Formatting, Config, LLM Interaction, Schema Manager). Aim for high code coverage. Use `pytest`.', 'agent_type_hint': 'TestingAgent', 'inputs': 'All source code modules from `src/`.', 'target_files': ['tests/unit/'], 'input_files': ['src/'], 'deliverables': 'Suite of unit tests.', 'acceptance_criteria': 'Unit tests pass. Code coverage > 80%.', 'dependencies': ['I4.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I5",
+        "completed": false,
+        "target_files": [
+            "tests/unit/"
+        ],
+        "input_files": [
+            "src/"
+        ],
+        "dependencies": [
+            "I4.T5"
+        ]
+    },
+    {
+        "name": "I5.T2",
+        "context": "{'task_id': 'I5.T2', 'iteration_id': 'I5', 'iteration_goal': 'Testing, Logging, Monitoring & Finalization', 'description': 'Write integration tests for the main flows: chit-chat, data retrieval, and insight generation. These tests will involve multiple components interacting. Mock external services (LLM API, PostgreSQL DB) where appropriate.', 'agent_type_hint': 'TestingAgent', 'inputs': '`src/core/orchestrator.py`, `src/api/v1/query_router.py`.', 'target_files': ['tests/integration/'], 'input_files': ['src/'], 'deliverables': 'Suite of integration tests.', 'acceptance_criteria': 'Integration tests pass, verifying component collaboration for key scenarios.', 'dependencies': ['I4.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I5",
+        "completed": false,
+        "target_files": [
+            "tests/integration/"
+        ],
+        "input_files": [
+            "src/"
+        ],
+        "dependencies": [
+            "I4.T5"
+        ]
+    },
+    {
+        "name": "I5.T3",
+        "context": "{'task_id': 'I5.T3', 'iteration_id': 'I5', 'iteration_goal': 'Testing, Logging, Monitoring & Finalization', 'description': 'Integrate structured logging (e.g., JSON format) throughout the application. Log key events: incoming requests, intent classification, generated SQL (sanitized), SQL execution status, errors, LLM prompts/responses (or IDs/metadata for brevity/cost), final responses. Configure log levels.', 'agent_type_hint': 'BackendAgent', 'inputs': 'All source code modules. Architecture doc section 3.8 (Logging & Monitoring).', 'target_files': ['src/'], 'input_files': ['src/'], 'deliverables': 'Application with comprehensive logging.', 'acceptance_criteria': 'Logs are generated in a structured format. Key events and errors are logged appropriately. Log levels are configurable.', 'dependencies': ['I4.T5'], 'parallelizable': False}",
+        "output": null,
+        "iteration_id": "I5",
+        "completed": false,
+        "target_files": [
+            "src/"
+        ],
+        "input_files": [
+            "src/"
+        ],
+        "dependencies": [
+            "I4.T5"
+        ]
+    },
+    {
+        "name": "I5.T4",
+        "context": "{'task_id': 'I5.T4', 'iteration_id': 'I5', 'iteration_goal': 'Testing, Logging, Monitoring & Finalization', 'description': 'Create a basic CI/CD pipeline script (e.g., GitHub Actions workflow YAML). The pipeline should: lint code, run unit and integration tests, build Docker image. Optionally, validate OpenAPI spec.', 'agent_type_hint': 'DevOpsAgent', 'inputs': '`Dockerfile`, test suites, linter configuration.', 'target_files': ['.github/workflows/ci.yaml'], 'input_files': ['Dockerfile', 'requirements.txt', 'tests/'], 'deliverables': 'CI pipeline configuration file.', 'acceptance_criteria': 'Pipeline runs automatically on commits/PRs. Linter, tests, and Docker build pass.', 'dependencies': ['I1.T1', 'I5.T1', 'I5.T2'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I5",
+        "completed": false,
+        "target_files": [
+            ".github/workflows/ci.yaml"
+        ],
+        "input_files": [
+            "Dockerfile",
+            "requirements.txt",
+            "tests/"
+        ],
+        "dependencies": [
+            "I1.T1",
+            "I5.T1",
+            "I5.T2"
+        ]
+    },
+    {
+        "name": "I5.T5",
+        "context": "{'task_id': 'I5.T5', 'iteration_id': 'I5', 'iteration_goal': 'Testing, Logging, Monitoring & Finalization', 'description': 'Update `README.md` with comprehensive setup, configuration, and usage instructions. Ensure `api_docs/openapi.yaml` is up-to-date and well-documented. Regenerate/verify FastAPI auto-docs. Review all diagrams in `docs/diagrams/` for accuracy.', 'agent_type_hint': 'DocumentationAgent', 'inputs': 'Existing `README.md`, `api_docs/openapi.yaml`, `docs/diagrams/`.', 'target_files': ['README.md', 'api_docs/openapi.yaml'], 'input_files': ['README.md', 'api_docs/openapi.yaml', 'docs/diagrams/'], 'deliverables': 'Finalized project documentation.', 'acceptance_criteria': 'README is clear and complete. OpenAPI spec is accurate. Diagrams are consistent with the final implementation.', 'dependencies': ['I4.T5'], 'parallelizable': True}",
+        "output": null,
+        "iteration_id": "I5",
+        "completed": false,
+        "target_files": [
+            "README.md",
+            "api_docs/openapi.yaml"
+        ],
+        "input_files": [
+            "README.md",
+            "api_docs/openapi.yaml",
+            "docs/diagrams/"
+        ],
+        "dependencies": [
+            "I4.T5"
+        ]
+    }
+]
