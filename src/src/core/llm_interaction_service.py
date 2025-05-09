@@ -64,7 +64,7 @@ class LLMInteractionService:
             logger.error("LLM API Connection Error", extra={'request_id': request_id, 'prompt_type': prompt_type, 'error': str(e)}, exc_info=True)
             raise
         except APIError as e:
-            logger.error("LLM API Error", extra={'request_id': request_id, 'prompt_type': prompt_type, 'status_code': e.status_code, 'error': str(e)}, exc_info=True)
+            logger.error("LLM API Error", extra={'request_id': request_id, 'prompt_type': prompt_type, 'status_code': e.code, 'error': str(e)}, exc_info=True)
             raise
         except Exception as e:
             logger.error("An unexpected error occurred during LLM API call", extra={'request_id': request_id, 'prompt_type': prompt_type, 'error': str(e)}, exc_info=True)

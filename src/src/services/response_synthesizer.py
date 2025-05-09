@@ -1,5 +1,6 @@
 import logging
 from core.llm_interaction_service import LLMInteractionService
+from core.config import settings
 
 logger = logging.getLogger(__name__)
 

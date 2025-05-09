@@ -38,25 +38,25 @@ class Settings:
     LLM_LOG_CONTENT_MAX_LENGTH: int = int(os.getenv("LLM_LOG_CONTENT_MAX_LENGTH", 500)) # Max length of LLM content to log
 
 
-    # Load from config.yaml if it exists and env vars are not set
-    CONFIG_FILE = os.getenv("CONFIG_FILE", "config.yaml")
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r') as f:
-            config_data = yaml.safe_load(f)
-            if config_data:
-                # Override defaults only if env var is not set
-                settings_dict = Settings.__dict__
-                for key, default_value in settings_dict.items():
-                    if not key.startswith('__') and not callable(default_value):
-                        env_var = os.getenv(key.upper())
-                        if env_var is None and key in config_data:
-                             # Handle specific types if necessary, e.g., boolean
-                            if isinstance(settings_dict[key], bool):
-                                setattr(Settings, key, str(config_data[key]).lower() == 'true')
-                            elif isinstance(settings_dict[key], int):
-                                setattr(Settings, key, int(config_data[key]))
-                            else:
-                                setattr(Settings, key, config_data[key])
+    # # Load from config.yaml if it exists and env vars are not set
+    # CONFIG_FILE = os.getenv("CONFIG_FILE", "config.yaml")
+    # if os.path.exists(CONFIG_FILE):
+    #     with open(CONFIG_FILE, 'r') as f:
+    #         config_data = yaml.safe_load(f)
+    #         if config_data:
+    #             # Override defaults only if env var is not set
+    #             settings_dict = Settings.__dict__
+    #             for key, default_value in settings_dict.items():
+    #                 if not key.startswith('__') and not callable(default_value):
+    #                     env_var = os.getenv(key.upper())
+    #                     if env_var is None and key in config_data:
+    #                          # Handle specific types if necessary, e.g., boolean
+    #                         if isinstance(settings_dict[key], bool):
+    #                             setattr(Settings, key, str(config_data[key]).lower() == 'true')
+    #                         elif isinstance(settings_dict[key], int):
+    #                             setattr(Settings, key, int(config_data[key]))
+    #                         else:
+    #                             setattr(Settings, key, config_data[key])
 
 settings = Settings()
 
