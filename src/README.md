@@ -1,0 +1,1 @@
+{'response': 'The total revenue for the last quarter was 1,234,567.89 SAR.'}
