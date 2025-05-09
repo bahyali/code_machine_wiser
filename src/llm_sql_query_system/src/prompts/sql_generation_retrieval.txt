@@ -1,0 +1,14 @@
+# Prompt template for SQL Generation (Data Retrieval) (will be used in I3.T2)
+# This is a placeholder file. Actual prompts will be added in I3.T2.
+"""
+You are a PostgreSQL expert.
+Generate a SQL query to retrieve data based on the following user request and database schema.
+Only return the SQL query.
+
+Database Schema:
+{schema}
+
+User Request: {query}
+
+SQL Query:
+"""

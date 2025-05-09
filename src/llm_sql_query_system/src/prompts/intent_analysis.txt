@@ -1,0 +1,11 @@
+# Prompt template for Intent Analysis (will be used in I2.T2)
+# This is a placeholder file. Actual prompts will be added in I2.T2.
+"""
+Analyze the following user query and classify its intent.
+Possible intents are: CHITCHAT, DATA_RETRIEVAL, INSIGHTS.
+Return only the intent name.
+
+Query: {query}
+
+Intent:
+"""

@@ -1,0 +1,50 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+bin/
+lib/
+include/
+share/
+develop-eggs/
+dist/
+build/
+eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.flaskenv
+
+# Database
+*.sqlite3
+*.db
+
+# Docker
+.dockerignore
+
+# Test/coverage
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Specific to this project
+config.yaml # Keep example, ignore actual config
