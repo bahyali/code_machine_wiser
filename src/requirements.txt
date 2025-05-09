@@ -5,6 +5,4 @@ python-dotenv
 PyYAML
 openai
 psycopg2-binary
-pytest
-pytest-cov
-pytest-mock
+python-json-logger

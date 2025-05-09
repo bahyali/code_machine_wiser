@@ -1,29 +1,45 @@
-# Main FastAPI application entry point.
-
+import logging
 from fastapi import FastAPI
+from api.v1.query_router import router as query_router
+from core.logging_config import configure_logging
+from core.config import settings # Import settings if needed elsewhere
 
-# Import routers
-from api.v1 import query_router
+# Configure logging as early as possible
+configure_logging()
 
-# Create FastAPI app instance
+logger = logging.getLogger(__name__)
+
 app = FastAPI(
-    title="LLM-Powered Q&A System API",
-    description="API for interacting with the LLM-Powered Q&A System using natural language queries.",
+    title="LLM-Powered Q&A System",
+    description="API for natural language interaction with PostgreSQL",
     version="1.0.0",
-    # Add OpenAPI tags or other metadata if needed
 )
 
-# Include routers
-app.include_router(query_router.router, prefix="/api/v1", tags=["query"])
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Application startup initiated")
+    # Add any startup logic here (e.g., DB connection pool init)
+    # Note: DB connection for user's DB is handled per query or by schema manager
+    pass
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    logger.info("Application shutdown initiated")
+    # Add any shutdown logic here (e.g., close DB connection pool)
+    pass
+
+app.include_router(query_router, prefix="/api/v1")
 
 @app.get("/")
 async def read_root():
-    """
-    Root endpoint for basic health check.
-    """
+    logger.debug("Root endpoint accessed")
     return {"message": "LLM-Powered Q&A System API is running"}
 
-# Example of how to run the app (for development)
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+# Example of logging an error
+@app.get("/test-error")
+async def test_error():
+    try:
+        1 / 0
+    except Exception as e:
+        logger.error("An intentional test error occurred", exc_info=True)
+        return {"message": "Test error logged"}
