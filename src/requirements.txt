@@ -6,3 +6,7 @@ PyYAML
 openai
 psycopg2-binary
 python-json-logger
+pytest # Added for tests
+flake8 # Added for linting
+black # Added for formatting check
+isort # Added for import sorting check
