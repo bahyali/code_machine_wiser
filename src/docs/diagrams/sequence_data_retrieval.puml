@@ -1,0 +1,116 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Sequence Diagram: Data Retrieval Flow
+
+actor User
+participant "API Handler" as APIH <<Component\nFastAPI Routers>>
+participant "Query Orchestrator" as Orch <<Component\nPython Module>>
+participant "Intent Analysis Mod." as IntentM <<Component\nPython Module>>
+participant "DB Schema Manager" as SchemaM <<Component\nPython Module>>
+participant "SQL Generation Mod." as SQLGenM <<Component\nPython Module>>
+participant "SQL Execution Mod." as SQLExecM <<Component\nPython Module>>
+participant "Response Synth. Mod." as RespSynthM <<Component\nPython Module>>
+participant "Data Formatter & Validator" as FormatValM <<Component\nPython Module>>
+participant "LLM Interaction Svc" as LLMSvc <<Component\nPython Wrapper>>
+database "PostgreSQL DB" as PGDB <<External\nDatabase>>
+participant "LLM Service (GPT-4o)" as ExtLLM <<External\nAI Service>>
+
+User -> APIH : POST /query (natural_language_query)
+activate APIH
+APIH -> Orch : processQuery(query)
+activate Orch
+
+Orch -> IntentM : analyzeIntent(query)
+activate IntentM
+IntentM -> LLMSvc : getCompletion(prompt_intent_analysis, query)
+activate LLMSvc
+LLMSvc -> ExtLLM : Call GPT-4o API
+activate ExtLLM
+ExtLLM --> LLMSvc : Intent="DATA_RETRIEVAL"
+deactivate ExtLLM
+LLMSvc --> IntentM : Intent
+deactivate LLMSvc
+IntentM --> Orch : Intent
+deactivate IntentM
+
+alt If Intent is DATA_RETRIEVAL (FR-INTENT-001.2)
+
+    Orch -> SchemaM : getSchema()
+    activate SchemaM
+    SchemaM -> PGDB : Fetch DB Schema (FR-DB-001)
+    activate PGDB
+    PGDB --> SchemaM : Schema Information
+    deactivate PGDB
+    SchemaM --> Orch : Schema
+    deactivate SchemaM
+
+    Orch -> SQLGenM : generateSQL(query, schema)
+    activate SQLGenM
+    SQLGenM -> LLMSvc : getCompletion(prompt_sql_gen_retrieval, query, schema)
+    activate LLMSvc
+    LLMSvc -> ExtLLM : Call GPT-4o API (FR-SQL-001)
+    activate ExtLLM
+    ExtLLM --> LLMSvc : Generated SQL
+    deactivate ExtLLM
+    LLMSvc --> SQLGenM : SQL_Query
+    deactivate LLMSvc
+    SQLGenM --> Orch : SQL_Query
+    deactivate SQLGenM
+
+    Orch -> SQLExecM : executeSQL(SQL_Query)
+    activate SQLExecM
+    SQLExecM -> PGDB : Execute SQL (FR-SQL-003)
+    activate PGDB
+    alt SQL Execution Successful
+        PGDB --> SQLExecM : Query_Results
+        deactivate PGDB
+        SQLExecM --> Orch : Query_Results
+        deactivate SQLExecM
+
+        Orch -> RespSynthM : synthesizeResponse(query, Query_Results)
+        activate RespSynthM
+        ' Data Compilation (FR-RESP-001) happens implicitly by passing results
+        RespSynthM -> LLMSvc : getCompletion(prompt_response_synthesis, query, Query_Results)
+        activate LLMSvc
+        LLMSvc -> ExtLLM : Call GPT-4o API (FR-RESP-002)
+        activate ExtLLM
+        ExtLLM --> LLMSvc : Natural_Language_Response
+        deactivate ExtLLM
+        LLMSvc --> RespSynthM : Response
+        deactivate LLMSvc
+
+        RespSynthM -> FormatValM : formatAndValidate(Response, Query_Results)
+        activate FormatValM
+        FormatValM --> RespSynthM : Formatted_Response (FR-PRES-001, FR-VALID-001)
+        deactivate FormatValM
+
+        RespSynthM --> Orch : Formatted_Response
+        deactivate RespSynthM
+
+        Orch --> APIH : Formatted_Response
+        deactivate Orch
+        APIH --> User : HTTP 200 OK (Formatted_Response)
+        deactivate APIH
+    else SQL Execution Error (Basic Handling)
+        PGDB --> SQLExecM : SQL_Error_Message
+        deactivate PGDB
+        SQLExecM --> Orch : SQL_Error_Message
+        deactivate SQLExecM
+        ' Note: Detailed error correction loop (FR-ERROR-001) is in Insight flow diagram
+        Orch -> APIH : Error Response
+        deactivate Orch
+        APIH --> User : HTTP 500 Error (Error Details)
+        deactivate APIH
+    end
+else If Intent is CHITCHAT or INSIGHTS
+    ' Handled by other flows/diagrams
+    Orch --> APIH : Delegate to other handler / Placeholder Response
+    deactivate Orch
+    APIH --> User : HTTP 200 OK (Placeholder/ChitChat Response)
+    deactivate APIH
+end
+
+@enduml
