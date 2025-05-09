@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: LLM-Powered Q&A System API
+  description: API for interacting with the LLM-Powered Q&A System using natural language queries.
+  version: 1.0.0
+paths:
+  /api/v1/query:
+    post:
+      summary: Submit a natural language query
+      description: Accepts a natural language query from the user and returns a natural language response.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful response to the query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Invalid request or query format.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The natural language query string provided by the user.
+          example: "What is the total revenue for the last quarter?"
+      required:
+        - query
+    QueryResponse:
+      type: object
+      properties:
+        response:
+          type: string
+          description: The system's natural language response to the query.
+          example: "The total revenue for the last quarter was 1,234,567.89 SAR."
+      required:
+        - response
