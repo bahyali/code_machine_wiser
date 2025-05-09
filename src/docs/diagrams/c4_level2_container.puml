@@ -1,0 +1,22 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "User", "Asks questions in natural language.")
+System_Ext(pg_db, "PostgreSQL Database", "User's existing database (stores application data).")
+System_Ext(llm_service, "LLM Service (GPT-4o)", "External AI service (OpenAI API).")
+
+System_Boundary(c1, "LLM-Powered Q&A System") {
+    Container(api_app, "Application Service", "Python (FastAPI)", "Handles user queries, orchestrates LLM interactions, SQL generation, DB execution, and response formulation. Exposes a text-based API.")
+    ContainerDb(config_db, "Configuration Database", "PostgreSQL/SQLite (Optional)", "Stores system configuration, LLM prompts templates, schema cache (if implemented). Could be embedded or a small separate instance.")
+}
+
+Rel(user, api_app, "Submits query via API", "HTTPS/JSON")
+Rel_Back(api_app, user, "Returns response via API", "HTTPS/JSON")
+
+Rel(api_app, llm_service, "Uses for NLU, SQL Gen, Response Gen", "HTTPS/API")
+Rel(api_app, pg_db, "Reads schema, Executes SQL queries", "SQL (psycopg2)")
+Rel(api_app, config_db, "Reads/Writes configuration, prompt templates", "SQL")
+
+@enduml

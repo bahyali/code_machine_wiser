@@ -1,0 +1,23 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "User", "Asks questions in natural language.")
+System(pg_db, "PostgreSQL Database", "User's existing database containing data to be queried.")
+System(llm_service, "LLM Service (GPT-4o)", "External AI service for natural language understanding, SQL generation, and response synthesis.")
+
+System_Boundary(c1, "LLM-Powered Q&A System") {
+    System(qa_system, "Q&A System", "Analyzes user queries, generates SQL, interacts with DB, and formulates responses using LLM.")
+}
+
+Rel(user, qa_system, "Inputs natural language query", "Text (e.g., API call)")
+Rel_Back(qa_system, user, "Provides formatted response/insights", "Text (e.g., API response)")
+
+Rel(qa_system, llm_service, "Sends prompts for intent analysis, SQL generation, response synthesis", "HTTPS/API")
+Rel_Back(llm_service, qa_system, "Returns LLM completions", "HTTPS/API")
+
+Rel(qa_system, pg_db, "Executes SQL queries, fetches schema", "SQL/JDBC/ODBC")
+Rel_Back(pg_db, qa_system, "Returns query results/schema information", "SQL/JDBC/ODBC")
+
+@enduml
