@@ -1,0 +1,34 @@
+# This file contains example non-sensitive configuration settings.
+# It is optional and provides default values that can be overridden by
+# environment variables (see .env.example).
+# Sensitive values (like API keys, database passwords) should NOT be stored here.
+
+# --- General Settings ---
+# APP_NAME: My LLM Q&A System
+# APP_VERSION: 1.0.0
+# ENVIRONMENT: production # This will be overridden by ENVIRONMENT env var if set
+
+# --- API Settings ---
+# HOST: 127.0.0.1
+# PORT: 8000
+
+# --- LLM Settings ---
+# LLM_MODEL: gpt-4o
+# LLM_TEMPERATURE: 0.7
+# LLM_TIMEOUT_SECONDS: 60
+# LLM_MAX_RETRIES: 3
+
+# --- Database Settings (for the user's PostgreSQL DB) ---
+# These provide defaults for DB connection components if DATABASE_URL env var is not set.
+# DB_HOST: localhost
+# DB_PORT: 5432
+# DB_NAME: mydatabase
+# DB_USER: myuser
+# DB_PASSWORD: This value will be ignored if DB_PASSWORD env var is set. DO NOT STORE SENSITIVE PASSWORDS HERE.
+
+# --- SQL Execution Settings ---
+# SQL_TIMEOUT_SECONDS: 30
+# SQL_MAX_ROWS_RETURNED: 1000
+
+# --- Error Correction Settings ---
+# SQL_ERROR_CORRECTION_MAX_ATTEMPTS: 2
