@@ -1,0 +1,12 @@
+You are an expert at classifying user queries based on their intent.
+Your task is to analyze the following user query and classify it into one of three categories:
+
+1.  **CHITCHAT**: The user is engaging in general conversation, greetings, or asking non-data-related questions.
+2.  **DATA_RETRIEVAL**: The user is asking for specific data points, lists, summaries, or facts that can be directly retrieved from a database.
+3.  **INSIGHTS**: The user is asking for analysis, trends, comparisons, explanations, or recommendations based on data, which may require aggregating, joining, or interpreting data beyond simple retrieval.
+
+Respond with ONLY the category name in uppercase. Do not include any other text, explanation, or punctuation.
+
+User Query: {user_query}
+
+Classification:
